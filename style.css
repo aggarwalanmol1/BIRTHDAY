@@ -1,0 +1,25 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #30223d; background: linear-gradient(135deg,#ffe0ef,#e7d9ff); min-height: 100vh; }
+header { text-align: center; padding: 28px 16px 18px; color: #6e347f; }
+header h1 { margin: 0 0 8px; font-size: clamp(28px,5vw,42px); }
+header p { margin: 0; }
+.container { width: min(1100px,94%); margin: 20px auto 40px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: start; }
+.editor,.preview { background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.8); border-radius: 22px; padding: 25px; box-shadow: 0 12px 35px rgba(89,48,112,.12); }
+.editor h2,.preview h2 { margin: 0 0 20px; color: #783c80; }
+label { display: block; margin: 15px 0 7px; font-weight: 700; }
+input,textarea,select { width: 100%; border: 1px solid #dfcde8; border-radius: 11px; padding: 12px 13px; font: inherit; background: #fff; color: #30223d; outline: none; }
+input:focus,textarea:focus,select:focus { border-color: #b45bc5; box-shadow: 0 0 0 3px rgba(180,91,197,.12); }
+textarea { min-height: 110px; resize: vertical; }
+button { border: 0; border-radius: 999px; padding: 13px 20px; background: linear-gradient(135deg,#ff3f91,#a855f7); color: #fff; font-weight: 800; cursor: pointer; box-shadow: 0 7px 18px rgba(168,85,247,.2); }
+button:hover { filter: brightness(1.04); transform: translateY(-1px); }
+button:disabled { opacity: .6; cursor: wait; transform: none; }
+#generateBtn { width: 100%; margin-top: 22px; }
+#statusMessage { line-height: 1.6; overflow-wrap: anywhere; }
+.preview-card { text-align: center; padding: 25px 18px; border-radius: 18px; background: linear-gradient(135deg,#fff0f7,#f0e8ff); }
+.preview-emoji { font-size: 48px; }
+#previewName { color: #813f91; overflow-wrap: anywhere; }
+#previewPhotos,.photo-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+#previewPhotos img,.photo-preview img { width: 90px; height: 90px; object-fit: cover; border-radius: 13px; border: 3px solid white; box-shadow: 0 3px 12px #8b5a9b30; }
+.photo-preview img { width: 76px; height: 76px; }
+footer { text-align: center; padding: 0 15px 25px; color: #75427c; }
+@media(max-width:760px) { .container { grid-template-columns: 1fr; } .editor,.preview { padding: 20px; } }

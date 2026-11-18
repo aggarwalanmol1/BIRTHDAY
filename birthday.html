@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Roast 😂</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffb6d9, #d8b4fe);
+            color: #333;
+            text-align: center;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 35px 15px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .active {
+            display: flex;
+        }
+
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            padding: 35px 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.18);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 20px 0;
+        }
+
+        p {
+            font-size: 17px;
+            line-height: 1.8;
+            margin: 12px 0;
+        }
+
+        button {
+            border: none;
+            padding: 15px 25px;
+            margin: 12px;
+            border-radius: 30px;
+            background: #ff3f91;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.06);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .warning {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .main-photo {
+            width: 190px;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 6px solid #ff70a6;
+            margin: 20px auto;
+        }
+
+        .traits {
+            margin: 25px 0;
+        }
+
+        .trait {
+            background: #fff0f6;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .gift {
+            font-size: 100px;
+            cursor: pointer;
+            animation: bounce 1.2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .heart {
+            font-size: 45px;
+            margin: 15px;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* PASSWORD SCREEN */
+
+        #accessGate {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            background: linear-gradient(135deg, #ffb6d9, #d8b4fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .access-card {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 25px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 10px 35px rgba(0,0,0,.18);
+        }
+
+        .access-card input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        #accessStatus {
+            color: #e11d48;
+            font-size: 14px;
+        }
+
+        /* EGG INTRO */
+
+        #eggIntro {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffb6d9, #d8b4fe);
+            text-align: center;
+            padding: 15px;
+        }
+
+        .intro-text {
+            color: #783c80;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .egg-scene {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            flex-shrink: 0;
+        }
+
+        #egg {
+            position: absolute;
+            z-index: 5;
+            left: 50%;
+            top: -180px;
+            font-size: 100px;
+            transform: translateX(-50%);
+        }
+
+        #eggBurst {
+            position: absolute;
+            z-index: 6;
+            top: 110px;
+            left: 50%;
+            font-size: 100px;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        #birthdayPerson {
+            position: absolute;
+            z-index: 4;
+            top: 65px;
+            left: 50%;
+            opacity: 0;
+            transform: translate(-50%, 60px) scale(.1);
+        }
+
+        #introPhoto {
+            display: block;
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 7px solid white;
+            box-shadow: 0 0 35px rgba(255,255,255,.9);
+        }
+
+        .egg-shell {
+            position: absolute;
+            z-index: 7;
+            top: 105px;
+            font-size: 60px;
+            opacity: 0;
+        }
+
+        .left-shell {
+            left: 55px;
+        }
+
+        .right-shell {
+            right: 55px;
+        }
+
+        #introName {
+            color: #8b3d91;
+            font-size: 32px;
+            margin: 5px;
+            opacity: 0;
+        }
+
+        #introMessage {
+            color: #75427c;
+            font-size: 18px;
+            opacity: 0;
+        }
+
+        #enterBirthday {
+            margin-top: 15px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #ff3f91, #a855f7);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        /* EGG ANIMATIONS */
+
+        @keyframes eggFall {
+            0% {
+                top: -180px;
+                transform: translateX(-50%) rotate(-20deg);
+            }
+
+            75% {
+                top: 100px;
+                transform: translateX(-50%) rotate(15deg);
+            }
+
+            85% {
+                top: 75px;
+                transform: translateX(-50%) rotate(-10deg);
+            }
+
+            100% {
+                top: 100px;
+                transform: translateX(-50%) scale(.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes eggExplosion {
+            0% {
+                opacity: 0;
+                transform: translate(-50%,-50%) scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(-50%,-50%) scale(1.5);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%,-50%) scale(2);
+            }
+        }
+
+        @keyframes revealPerson {
+            0% {
+                opacity: 0;
+                transform: translate(-50%,60px) scale(.1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-50%,0) scale(1);
+            }
+        }
+
+        @keyframes leftShell {
+            0% {
+                opacity: 1;
+                transform: translate(0,0) rotate(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-120px,-100px) rotate(-180deg);
+            }
+        }
+
+        @keyframes rightShell {
+            0% {
+                opacity: 1;
+                transform: translate(0,0) rotate(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(120px,-100px) rotate(180deg);
+            }
+        }
+
+        @keyframes introFade {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media(max-width: 500px) {
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 25px 15px;
+            }
+
+            .gallery-grid img {
+                height: 140px;
+            }
+
+        }
+
+        @media(max-height: 650px) {
+
+            .egg-scene {
+                transform: scale(.8);
+                height: 240px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- PASSWORD ACCESS -->
+
+    <div id="accessGate">
+
+        <div class="access-card">
+
+            <h1>🔐 A Secret Surprise!</h1>
+
+            <p>Enter your birthday password to unlock your surprise! 🎂</p>
+
+            <input
+                id="viewPassword"
+                type="password"
+                placeholder="Enter your password"
+            >
+
+            <button id="unlockBtn">
+                UNLOCK MY SURPRISE ❤️
+            </button>
+
+            <p id="accessStatus"></p>
+
+        </div>
+
+    </div>
+
+
+    <!-- EGG INTRO -->
+
+    <div id="eggIntro">
+
+        <div class="intro-text">
+            A little surprise is hatching...
+        </div>
+
+        <div class="egg-scene">
+
+            <div id="egg">🥚</div>
+
+            <div id="eggBurst">💥</div>
+
+            <div id="birthdayPerson">
+
+                <img id="introPhoto" src="" alt="Birthday Person">
+
+            </div>
+
+            <div class="egg-shell left-shell">🥚</div>
+
+            <div class="egg-shell right-shell">🥚</div>
+
+        </div>
+
+        <h1 id="introName"></h1>
+
+        <p id="introMessage">
+            Someone special has hatched! 🐣
+        </p>
+
+        <button id="enterBirthday">
+            LET THE CHAOS BEGIN 🎉
+        </button>
+
+    </div>
+
+
+    <canvas id="confetti"></canvas>
+
+
+    <!-- PAGE 1: WARNING -->
+
+    <section class="page active" id="page1">
+
+        <div class="card">
+
+            <div class="warning">🚨😂🚨</div>
+
+            <h1>OYE <span class="personName">BIRTHDAY STAR</span>!</h1>
+
+            <h2>OFFICIAL WARNING 💀</h2>
+
+            <img id="mainPhoto" class="main-photo" alt="Birthday person">
+
+            <p>
+                Aaj ek khatarnak specimen ka birthday hai.
+            </p>
+
+            <p>
+                Ek saal aur bada ho gaya/gayi...
+                lekin harkatein abhi bhi bachchon wali hain! 😭
+            </p>
+
+            <h2>READY FOR YOUR ROAST?</h2>
+
+            <button onclick="goToPage(2)">
+                HAAN, DIKHA APNI AUKAAT 😂
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAGE 2: PERSONALITY ROAST -->
+
+    <section class="page" id="page2">
+
+        <div class="card">
+
+            <div class="warning">💀</div>
+
+            <h1>THE LEGENDARY QUALITIES!</h1>
+
+            <h2 id="traitHeading">Introducing the specimen...</h2>
+
+            <div class="traits" id="traitsContainer"></div>
+
+            <p>
+                Itna talent ek hi insaan mein?
+                NASA ko inform karo! 😂
+            </p>
+
+            <button onclick="goToPage(3)">
+                AB GIFT DIKHA! 🎁
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAGE 3: GIFT -->
+
+    <section class="page" id="page3">
+
+        <div class="card">
+
+            <h1>TERA GIFT AA GAYA! 🎁</h1>
+
+            <p>
+                Itni der se wait kar raha/rahi tha?
+            </p>
+
+            <div class="gift" onclick="openGift()">
+                🎁
+            </div>
+
+            <h2 id="giftText">OPEN KAR NA! 😭</h2>
+
+            <button onclick="openGift()">
+                OPEN YOUR GIFT ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAGE 4: BIRTHDAY WISH -->
+
+    <section class="page" id="page4">
+
+        <div class="card">
+
+            <div class="warning">🎉🎂🎉</div>
+
+            <h1>HAPPY BIRTHDAY!</h1>
+
+            <h2 class="personName">Birthday Star</h2>
+
+            <div class="heart">❤️💗❤️</div>
+
+            <p id="birthdayMessage"></p>
+
+            <h2>LOTS OF LOVE! 🫶</h2>
+
+            <p>
+                With love,
+                <br>
+                <b id="senderName">Your Best Friend</b>
+            </p>
+
+            <button onclick="goToPage(5)">
+                AB YAADEN DEKH! 📸
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAGE 5: PHOTO GALLERY -->
+
+    <section class="page" id="page5">
+
+        <div class="card">
+
+            <h1>📸 THE MEMORIES</h1>
+
+            <p>
+                Mazaak apni jagah...
+                lekin ye moments genuinely special hain! ❤️
+            </p>
+
+            <div class="gallery-grid" id="gallery"></div>
+
+            <h2>HAPPY BIRTHDAY ONCE AGAIN! 🥳</h2>
+
+            <p>
+                Ab jaa aur birthday enjoy kar.
+                Treat dena mat bhoolna! 💀
+            </p>
+
+            <button onclick="goToPage(1)">
+                DOBARA ROAST DEKH 😂
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- BIRTHDAY WEBSITE LOGIC -->
+
+
+    <!-- BIRTHDAY WEBSITE LOGIC -->
+
+    <script>
+
+        // GET SLUG FROM URL
+
+        const params = new URLSearchParams(window.location.search);
+
+        const slug = params.get("slug");
+
+
+        // GET HTML ELEMENTS
+
+        const accessGate = document.getElementById("accessGate");
+
+        const unlockBtn = document.getElementById("unlockBtn");
+
+        const viewPassword = document.getElementById("viewPassword");
+
+        const accessStatus = document.getElementById("accessStatus");
+
+
+        // CHECK PASSWORD
+
+        unlockBtn.addEventListener("click", loadBirthday);
+
+        viewPassword.addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                loadBirthday();
+            }
+
+        });
+
+
+        // LOAD BIRTHDAY FROM THE VERCEL API
+
+        async function loadBirthday() {
+
+            const password = viewPassword.value;
+
+            if (!slug) {
+
+                accessStatus.innerText =
+                    "Invalid birthday link!";
+
+                return;
+
+            }
+
+            if (!password) {
+
+                accessStatus.innerText =
+                    "Please enter your password!";
+
+                return;
+
+            }
+
+            try {
+
+                unlockBtn.disabled = true;
+
+                accessStatus.innerText =
+                    "Opening your surprise... ❤️";
+
+
+                const response = await fetch("/api/view-birthday", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ slug, password })
+                });
+
+
+                const result = await response.json();
+
+
+                if (!response.ok || !result.success) {
+
+                    throw new Error(
+                        result.error || "Incorrect password!"
+                    );
+
+                }
+
+
+                const data = result.birthday;
+
+
+                // APPLY THEME
+
+                const themes = {
+
+                    pink: "linear-gradient(135deg,#ffb6d9,#d8b4fe)",
+
+                    purple: "linear-gradient(135deg,#eadcff,#b99aff)",
+
+                    blue: "linear-gradient(135deg,#d8f1ff,#91caff)",
+
+                    dark: "linear-gradient(135deg,#252238,#59456b)"
+
+                };
+
+
+                document.body.style.background =
+                    themes[data.theme] || themes.pink;
+
+
+                document.getElementById("eggIntro").style.background =
+                    themes[data.theme] || themes.pink;
+
+
+                // DISPLAY NAME
+
+                document.querySelectorAll(".personName").forEach(element => {
+
+                    element.innerText = data.name;
+
+                });
+
+
+                // DISPLAY PHOTOS
+
+                const photos = data.photos || [];
+
+                const mainPhoto =
+                    document.getElementById("mainPhoto");
+
+
+                if (photos.length > 0) {
+
+                    mainPhoto.src = photos[0];
+
+                } else {
+
+                    mainPhoto.style.display = "none";
+
+                }
+
+
+                // DISPLAY PERSONALITY TRAITS
+
+                const traitsContainer =
+                    document.getElementById("traitsContainer");
+
+                traitsContainer.innerHTML = "";
+
+
+                (data.traits || []).forEach((trait, index) => {
+
+                    const div = document.createElement("div");
+
+                    div.className = "trait";
+
+                    div.innerText =
+                        (index + 1) + ". " + trait;
+
+                    traitsContainer.appendChild(div);
+
+                });
+
+
+                // DISPLAY BIRTHDAY MESSAGE
+
+                document.getElementById("birthdayMessage").innerText =
+                    data.message || "";
+
+
+                document.getElementById("senderName").innerText =
+                    data.sender || "Your Best Friend";
+
+
+                // DISPLAY GALLERY
+
+                const gallery =
+                    document.getElementById("gallery");
+
+                gallery.innerHTML = "";
+
+
+                photos.forEach((photo, index) => {
+
+                    const img = document.createElement("img");
+
+                    img.src = photo;
+
+                    img.alt = "Memory " + (index + 1);
+
+                    gallery.appendChild(img);
+
+                });
+
+
+                // EGG INTRO DETAILS
+
+                document.getElementById("introName").textContent =
+                    "Happy Birthday, " + data.name + "! 🎂";
+
+
+                document.getElementById("introMessage").textContent =
+                    "Someone special has hatched! 🐣";
+
+
+                const introPhoto =
+                    document.getElementById("introPhoto");
+
+
+                if (photos.length > 0) {
+
+                    introPhoto.src = photos[0];
+
+                } else {
+
+                    introPhoto.style.display = "none";
+
+                }
+
+
+                // START EGG ANIMATIONS
+
+                restartEggAnimation();
+
+
+                // SHOW EGG INTRO
+
+                accessGate.style.display = "none";
+
+                document.getElementById("eggIntro").style.display =
+                    "flex";
+
+
+                // ENTER BIRTHDAY BUTTON
+
+                document.getElementById("enterBirthday").onclick =
+                    function() {
+
+                        document.getElementById("eggIntro").style.display =
+                            "none";
+
+                        goToPage(1);
+
+                    };
+
+
+            }
+
+            catch(error) {
+
+                console.error(error);
+
+                accessStatus.innerText =
+                    "❌ " + error.message;
+
+            }
+
+            finally {
+
+                unlockBtn.disabled = false;
+
+            }
+
+        }
+
+
+        // RESTART EGG ANIMATION
+
+        function restartEggAnimation() {
+
+            const animations = [
+
+                ["egg", "eggFall 1.5s cubic-bezier(.5,0,.8,1) forwards"],
+
+                ["eggBurst", "eggExplosion .7s ease 1.5s forwards"],
+
+                ["birthdayPerson", "revealPerson 1s ease 2s forwards"],
+
+                ["introName", "introFade 1s ease 2.7s forwards"],
+
+                ["introMessage", "introFade 1s ease 3s forwards"],
+
+                ["enterBirthday", "introFade 1s ease 3.5s forwards"]
+
+            ];
+
+
+            animations.forEach(([id, animation]) => {
+
+                const element = document.getElementById(id);
+
+                element.style.animation = "none";
+
+                void element.offsetWidth;
+
+                element.style.animation = animation;
+
+            });
+
+
+            const leftShell =
+                document.querySelector(".left-shell");
+
+            const rightShell =
+                document.querySelector(".right-shell");
+
+
+            leftShell.style.animation = "none";
+
+            rightShell.style.animation = "none";
+
+            void leftShell.offsetWidth;
+
+            void rightShell.offsetWidth;
+
+
+            leftShell.style.animation =
+                "leftShell 1s ease 1.5s forwards";
+
+            rightShell.style.animation =
+                "rightShell 1s ease 1.5s forwards";
+
+        }
+
+
+        // CHANGE PAGES
+
+        function goToPage(number) {
+
+            document.querySelectorAll(".page").forEach(page => {
+
+                page.classList.remove("active");
+
+            });
+
+
+            document.getElementById("page" + number)
+                .classList.add("active");
+
+
+            window.scrollTo(0, 0);
+
+        }
+
+
+        // OPEN GIFT
+
+        function openGift() {
+
+            document.getElementById("giftText").innerText =
+                "SURPRISEEEEE! 🎉😂";
+
+
+            setTimeout(() => {
+
+                celebrate();
+
+                goToPage(4);
+
+            }, 1000);
+
+        }
+
+
+        // CONFETTI CELEBRATION
+
+        function celebrate() {
+
+            const canvas =
+                document.getElementById("confetti");
+
+            const ctx = canvas.getContext("2d");
+
+
+            canvas.width = window.innerWidth;
+
+            canvas.height = window.innerHeight;
+
+
+            const pieces = [];
+
+
+            for (let i = 0; i < 150; i++) {
+
+                pieces.push({
+
+                    x: Math.random() * canvas.width,
+
+                    y: Math.random() * canvas.height - canvas.height,
+
+                    size: Math.random() * 8 + 4,
+
+                    speed: Math.random() * 5 + 2,
+
+                    color: [
+
+                        "#ff3f91",
+
+                        "#ffd700",
+
+                        "#9b59b6",
+
+                        "#00bfff",
+
+                        "#ff6347"
+
+                    ][Math.floor(Math.random() * 5)]
+
+                });
+
+            }
+
+
+            let frames = 0;
+
+
+            function animate() {
+
+                ctx.clearRect(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+
+                pieces.forEach(piece => {
+
+                    ctx.fillStyle = piece.color;
+
+                    ctx.fillRect(
+                        piece.x,
+                        piece.y,
+                        piece.size,
+                        piece.size
+                    );
+
+
+                    piece.y += piece.speed;
+
+
+                    if (piece.y > canvas.height) {
+
+                        piece.y = -10;
+
+                    }
+
+                });
+
+
+                frames++;
+
+
+                if (frames < 180) {
+
+                    requestAnimationFrame(animate);
+
+                } else {
+
+                    ctx.clearRect(
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
+
+                }
+
+            }
+
+
+            animate();
+
+        }
+
+    </script>
+
+</body>
+
+</html>

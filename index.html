@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Studio 😂</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>🎂 Birthday Studio</h1>
+    <p>Create the most personalised birthday roast ever!</p>
+</header>
+
+<main class="container">
+
+    <section class="editor">
+        <h2>😂 Create Your Birthday Roast</h2>
+
+        <label>Birthday Person's Name</label>
+        <input id="nameInput" type="text" placeholder="Enter their name" required>
+
+        <label>Your Creator Password</label>
+        <input
+            id="creatorPassword"
+            type="password"
+            placeholder="Your private creator password"
+            required
+        >
+
+        <label>Friend's Viewing Password</label>
+        <input
+            id="birthdayPassword"
+            type="password"
+            placeholder="Create a password (minimum 8 characters)"
+            minlength="8"
+            required
+        >
+
+        <label>Upload Photos (Maximum 4)</label>
+        <input id="photoInput" type="file" accept="image/*" multiple>
+
+        <div id="photoPreview" class="photo-preview"></div>
+
+        <label>Personality Trait 1</label>
+        <input id="trait1" placeholder="e.g. Professional overthinker">
+
+        <label>Personality Trait 2</label>
+        <input id="trait2" placeholder="e.g. Always late">
+
+        <label>Personality Trait 3</label>
+        <input id="trait3" placeholder="e.g. Drama specialist">
+
+        <label>Personality Trait 4</label>
+        <input id="trait4" placeholder="e.g. Food lover">
+
+        <label>Personal Birthday Message</label>
+        <textarea id="messageInput" placeholder="Write something special..."></textarea>
+
+        <label>Your Name</label>
+        <input id="senderInput" placeholder="Enter your name">
+
+        <label>Choose Theme</label>
+        <select id="themeInput">
+            <option value="pink">Pink 💗</option>
+            <option value="purple">Purple 💜</option>
+            <option value="blue">Blue 💙</option>
+            <option value="dark">Dark 🖤</option>
+        </select>
+
+        <button id="generateBtn">GENERATE BIRTHDAY ROAST 😂</button>
+
+        <p id="statusMessage"></p>
+    </section>
+
+    <section class="preview">
+        <h2>✨ Live Preview</h2>
+        <div class="preview-card">
+            <div class="preview-emoji">🎉</div>
+            <h1 id="previewName">Birthday Star</h1>
+            <p>Your personalised birthday surprise starts here!</p>
+            <div id="previewPhotos"></div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    Made with ❤️ using Birthday Studio
+</footer>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
